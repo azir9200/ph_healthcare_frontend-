@@ -1,26 +1,22 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import assets from "@/assets";
+// import assets from "@/assets";
 
 const HeroSection = () => {
   return (
-    <Container
-    //   sx={{
-    //     display: "flex",
-    //     direction: "row",
-    //     my: 16,
-    //   }}
-    >
-      {/* <Box sx={{ flex: 1, position: "relative" }}>
+    <Container sx={{ display: "flex", direction: "row", my: 16 }}>
+      <Box sx={{ flex: 2, position: "relative" }}>
         <Box
           sx={{
             position: "absolute",
             width: "700px",
-            left: "-90px",
-            top: "-120px",
+            top: "-90px",
+            left: "-120px",
           }}
         >
-          <Image src={assets.svgs.grid} alt="doctor1" />
+          {" "}
+          <Image src={assets.svgs.grid} alt="grid" />{" "}
         </Box>
         <Typography variant="h2" component="h1" fontWeight={600}>
           Healthier Hearts
@@ -37,18 +33,20 @@ const HeroSection = () => {
           Preventive Care
         </Typography>
         <Typography sx={{ my: 4 }}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit eum
-          iusto consequatur eius, doloribus nesciunt facere aliquid eveniet et.
-          Rerum maiores saepe cupiditate repellat recusandae atque sed. Saepe,
-          vitae id?
+          The built environment can encourage physical activity. Better
+          visibility of stairs stimulates people to take them instead of the
+          lift. Promoting walking or bicycling even for short distances helps
+          incorporate physical activity into a daily routine. Awareness about
+          the importance of physical activity for health should start in early
+          childhood. Workplaces can offer fitness centres, desks that enable
+          employees to work standing up, or bicycle chairs.
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
           <Button>Make appointment</Button>
           <Button variant="outlined">Contact us</Button>
         </Box>
-      </Box> */}
-
-      {/* <Box
+      </Box>
+      <Box
         sx={{
           p: 1,
           flex: 1,
@@ -65,7 +63,7 @@ const HeroSection = () => {
             top: "-30px",
           }}
         >
-          <Image src={assets.svgs.arrow} width={100} height={100} alt="arrow" />
+          <Image src={assets.svgs.arrow} width={150} height={100} alt="arrow" />
         </Box>
         <Box
           sx={{
@@ -93,14 +91,14 @@ const HeroSection = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "220px",
-            left: "150px",
+            top: "350px",
+            left: "100px",
           }}
         >
           <Image
             src={assets.images.doctor3}
-            width={240}
-            height={240}
+            width={300}
+            height={300}
             alt="doctor3"
           />
         </Box>
@@ -119,7 +117,7 @@ const HeroSection = () => {
             alt="doctor3"
           />
         </Box>
-      </Box> */}
+      </Box>
     </Container>
   );
 };
