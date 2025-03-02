@@ -1,7 +1,23 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+"use client";
+import { getUserInfo, removeUser } from "@/services/auth/auth.services";
+import { Box, Container, Stack, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const AuthButton = dynamic(
+    () => import("@/components/UI/AuthButton/AuthButton"),
+    { ssr: false }
+  );
+  const userInfo = getUserInfo();
+  // console.log("navbar", isLoggedIn());
+  const router = useRouter();
+  const handleLogOut = () => {
+    removeUser();
+    router.refresh();
+  };
+
   return (
     <Container>
       <Stack
@@ -27,10 +43,7 @@ const Navbar = () => {
           <Typography>Diagnostics</Typography>
           <Typography>NGOs</Typography>
         </Stack>
-
-        <Button component={Link} href="/login">
-          Login
-        </Button>
+        <AuthButton />
       </Stack>
     </Container>
   );
