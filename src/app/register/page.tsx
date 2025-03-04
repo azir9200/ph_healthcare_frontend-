@@ -12,6 +12,12 @@ import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth/auth.services";
 import PHForm from "@/components/Forms/PHForm";
 import PHInput from "@/components/Forms/PHInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { validationSchema } from "@/components/validation/patientValidationSchema";
+import { defaultValues } from "@/components/Forms/defaultVales";
+import NextLink from 'next/link';
+import { Link as MuiLink } from '@mui/material';
+
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -63,7 +69,11 @@ const RegisterPage = () => {
             </Box>
           </Stack>
           <Box>
-            <PHForm onSubmit={handleRegister}>
+            <PHForm
+              onSubmit={handleRegister}
+              resolver={zodResolver(validationSchema)}
+              defaultValues={defaultValues}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
                   <PHInput label="Name" fullWidth={true} name="patient.name" />
@@ -71,7 +81,6 @@ const RegisterPage = () => {
                 <Grid item md={6}>
                   <PHInput
                     label="Email"
-                    type="email"
                     fullWidth={true}
                     name="patient.email"
                   />
@@ -112,9 +121,11 @@ const RegisterPage = () => {
               </Button>
               <Typography component="p" fontWeight={300}>
                 Do you already have an account?{" "}
-                <Link href="/login" className=" font-semibold text-red-500">
-                  Login
-                </Link>
+                <NextLink href="/login" passHref>
+  <MuiLink underline="hover" color="primary">
+    Login
+  </MuiLink>
+</NextLink>
               </Typography>
             </PHForm>
           </Box>

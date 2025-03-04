@@ -22,12 +22,8 @@ import PHInput from "@/components/Forms/PHInput";
 import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginValidationSchema } from "@/components/validation/validationSchemas";
 export type FormValues = {};
-
-export const validationSchema = z.object({
-  email: z.string().email("Please enter a valid email address!"),
-  password: z.string().min(6, "Must be at least 6 characters"),
-});
 
 const LoginPage = () => {
   const router = useRouter();
@@ -42,12 +38,13 @@ const LoginPage = () => {
         toast.success(res?.message || "Login Successful!");
         storeUserInfo({ accessToken: res?.data?.accessToken });
         router.push("/");
+      } else {
+        setError(res.message);
       }
     } catch (err: any) {
-      console.error(err.message);
-      // console.error("Login error:", err);
-      // setError(err.message || "Login failed. Please try again.");
-      // toast.error("Invalid credentials. Please check your email/password.");
+      console.error("Login error:", err);
+      setError(err.message || "Login failed. Please try again.");
+      toast.error("Invalid credentials. Please check your email/password.");
     }
   };
 
@@ -86,10 +83,26 @@ const LoginPage = () => {
             </Box>
           </Stack>
           {/* // error */}
+          {error && (
+            <Box>
+              <Typography
+                sx={{
+                  backgroundColor: "red",
+                  padding: "1px",
+                  borderRadius: "2px",
+                  color: "white",
+                  marginTop: "5px",
+                }}
+              >
+                {" "}
+                {error}
+              </Typography>
+            </Box>
+          )}
           <Box>
-          <PHForm
+            <PHForm
               onSubmit={handleLogin}
-              resolver={zodResolver(validationSchema)}
+              resolver={zodResolver(loginValidationSchema)}
               defaultValues={{
                 email: "",
                 password: "",
@@ -129,7 +142,7 @@ const LoginPage = () => {
               </Button>
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?{" "}
-                <Link href="/register" className=" font-semibold text-red-500">
+                <Link href="/register" className=" font-bold text-blue-900">
                   Create an account
                 </Link>
               </Typography>
