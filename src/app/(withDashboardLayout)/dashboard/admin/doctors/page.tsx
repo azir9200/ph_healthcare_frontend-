@@ -3,12 +3,12 @@
 import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import DoctorModal from "./components/DoctorModal";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "sonner";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
+import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 
 // import { useDebounced } from "@/redux/hooks";
 
@@ -16,15 +16,15 @@ const DoctorsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-  // console.log(searchTerm);
-
+  console.log(searchTerm);
+  query["searchTerm"] = searchTerm;
   // const debouncedTerm = useDebounced({
   //   searchQuery: searchTerm,
   //   delay: 600,
   // });
 
   // if (!!debouncedTerm) {
-  //   query["searchTerm"] = searchTerm;
+  // query["searchTerm"] = searchTerm;
   // }
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
   // const [deleteDoctor] = useDeleteDoctorMutation();
@@ -32,7 +32,7 @@ const DoctorsPage = () => {
   // console.log(data);
   const doctors = data?.doctors;
   const meta = data?.meta;
-  console.log(doctors);
+  // console.log("doctors", doctors, "meta", meta);
 
   const handleDelete = async (id: string) => {
     // console.log(id);
@@ -75,8 +75,19 @@ const DoctorsPage = () => {
       <Stack direction="row" justifyContent={"space-between"}>
         <Button onClick={() => setIsModalOpen(true)}>Create Doctor</Button>
         <DoctorModal open={isModalOpen} setOpen={setIsModalOpen} />
-        <TextField size="small" placeholder="Search Doctors" />
+        <TextField
+          onChange={(e) => setSearchTerm(e.target.value)}
+          size="small"
+          placeholder="Search Doctors"
+        />
       </Stack>
+      {!isLoading ? (
+        <Box my={2}>
+          <DataGrid rows={doctors} columns={columns} initialState={{}} />
+        </Box>
+      ) : (
+        <h1> Loading...</h1>
+      )}
     </Box>
   );
 };

@@ -41,7 +41,9 @@ const Navbar = () => {
           <Typography>Health Plans</Typography>
           <Typography>Medicine</Typography>
           <Typography>Diagnostics</Typography>
-          <Typography>NGOs</Typography>
+          <Typography component={Link} href="/dashboard">
+            Dashboard
+          </Typography>
         </Stack>
         <AuthButton />
       </Stack>

@@ -32,7 +32,7 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
     const data = modifyPayload(values);
     try {
       const res = await createDoctor(data).unwrap();
-      console.log("create doctor modal", res);
+      // console.log("create doctor modal", res);
       if (res?.id) {
         toast.success("Doctor created successfully!!!");
         setOpen(false);
