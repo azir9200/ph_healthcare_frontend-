@@ -52,7 +52,7 @@ const Specialist = () => {
         </Box>
 
         <Stack direction="row" gap={4} mt={5} flexWrap="wrap">
-          {specialties.map((specialty) => (
+          {specialties?.slice(0, 6).map((specialty) => (
             <Box
               key={specialty._id}
               sx={{
