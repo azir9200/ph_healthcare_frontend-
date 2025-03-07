@@ -8,7 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "sonner";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
+import {
+  useDeleteDoctorMutation,
+  useGetAllDoctorsQuery,
+} from "@/redux/api/doctorApi";
+import { useDebounced } from "@/redux/hooks";
 
 // import { useDebounced } from "@/redux/hooks";
 
@@ -18,16 +22,16 @@ const DoctorsPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   console.log(searchTerm);
   query["searchTerm"] = searchTerm;
-  // const debouncedTerm = useDebounced({
-  //   searchQuery: searchTerm,
-  //   delay: 600,
-  // });
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
 
-  // if (!!debouncedTerm) {
-  // query["searchTerm"] = searchTerm;
-  // }
+  if (!!debouncedTerm) {
+    query["searchTerm"] = searchTerm;
+  }
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
-  // const [deleteDoctor] = useDeleteDoctorMutation();
+  const [deleteDoctor] = useDeleteDoctorMutation();
 
   // console.log(data);
   const doctors = data?.doctors;
@@ -35,7 +39,15 @@ const DoctorsPage = () => {
   // console.log("doctors", doctors, "meta", meta);
 
   const handleDelete = async (id: string) => {
-    // console.log(id);
+    try {
+      const res = await deleteDoctor(id).unwrap();
+      console.log("res delete", res);
+      if (res?.id) {
+        toast.success("Doctor deleted successfully!!!");
+      }
+    } catch (err: any) {
+      console.error(err.message);
+    }
   };
 
   const columns: GridColDef[] = [

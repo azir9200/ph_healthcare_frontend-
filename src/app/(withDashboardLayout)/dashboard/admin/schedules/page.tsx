@@ -1,10 +1,16 @@
-import React from "react";
+"use client";
+import { useEffect, useState } from "react";
+import ScheduleModal from "./components/ScheduleModal";
+import { Box, Button } from "@mui/material";
 
 const SchedulesPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   return (
-    <div>
-      <p>You looking for Schedules...</p>
-    </div>
+    <Box>
+      <Button onClick={() => setIsModalOpen(true)}>Create Schedule</Button>
+      <ScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
+    </Box>
   );
 };
 
