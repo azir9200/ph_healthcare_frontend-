@@ -8,9 +8,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import TryIcon from "@mui/icons-material/Try";
 
-
 export const drawerItems = (role: UserRole): DrawerItem[] => {
-
   const roleMenus: DrawerItem[] = [];
 
   switch (role) {
@@ -74,6 +72,16 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         {
           title: "Schedules",
           path: `${role}/schedules`,
+          icon: CalendarMonthIcon,
+        },
+        {
+          title: "Patients",
+          path: `${role}/patients`,
+          icon: CalendarMonthIcon,
+        },
+        {
+          title: "Profile",
+          path: `${role}/profile`,
           icon: CalendarMonthIcon,
         },
         {

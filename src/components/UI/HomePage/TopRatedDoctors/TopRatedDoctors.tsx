@@ -9,24 +9,31 @@ import {
   CardMedia,
   Container,
   Grid,
+  Grid2,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useEffect, useState } from "react";
+import { Doctor } from "@/types/doctor";
 
 const TopRatedDoctors = () => {
-  const [doctors, setDoctors] = useState([]);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/v1/doctor?page=1&limit=3");
+        const res = await fetch(
+          "http://localhost:5000/api/v1/doctor?page=1&limit=3"
+        );
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const { data } = await res.json();
+        if (!data || !Array.isArray(data)) {
+          throw new Error("Invalid data format");
+        }
         setDoctors(data);
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -64,15 +71,16 @@ const TopRatedDoctors = () => {
       <Container sx={{ margin: "30px auto" }}>
         <Grid container spacing={2}>
           {doctors.length > 0 ? (
-            doctors.map((doctor: any) => (
-              <Grid item key={doctor._id} md={4}>
+            doctors.map((doctor: any, index) => (
+              <Grid xs={12} md={4} key={doctor._id || index}>
                 <Card>
                   <Box>
                     <Image
-                      src={doctor.profilePhoto}
+                      src={doctor.profilePhoto || "/images/default-doctor.jpg"}
                       alt="doctor"
                       width={500}
-                      height={100}
+                      height={300}
+                      style={{ objectFit: "cover" }}
                     />
                   </Box>
                   <CardContent>

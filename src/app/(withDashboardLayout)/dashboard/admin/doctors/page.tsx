@@ -20,7 +20,7 @@ const DoctorsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-  console.log(searchTerm);
+  // console.log(searchTerm);
   query["searchTerm"] = searchTerm;
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,

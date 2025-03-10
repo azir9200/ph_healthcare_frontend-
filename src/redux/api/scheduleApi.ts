@@ -1,6 +1,13 @@
 import { baseApi } from "./baseApi";
 import { tagTypes } from "../tag-types";
 import { IMeta } from "@/types/common";
+import { ISchedule } from "@/types/schedule";
+interface IScheduleResponse {
+  schedules: {
+    data: ISchedule[]; // Array of schedules
+  };
+  meta: IMeta;
+}
 
 export const scheduleApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +19,9 @@ export const scheduleApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.schedule],
     }),
-    getAllSchedules: build.query({
+
+    //get api
+    getAllSchedules: build.query<IScheduleResponse, Record<string, any>>({
       query: (arg: Record<string, any>) => {
         return {
           url: "/schedule",
@@ -20,7 +29,7 @@ export const scheduleApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: [], meta: IMeta) => {
+      transformResponse: (response: { data: ISchedule[] }, meta: IMeta) => {
         return {
           schedules: response,
           meta,
