@@ -24,8 +24,13 @@ const TopRatedDoctors = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
+        
+        // const res = await fetch(
+        //   // "http://localhost:5000/api/v1/doctor?page=1&limit=3",
+        // );
+        
         const res = await fetch(
-          "http://localhost:5000/api/v1/doctor?page=1&limit=3"
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/doctor?page=1&limit=3`
         );
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);

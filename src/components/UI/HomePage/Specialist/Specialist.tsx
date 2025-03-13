@@ -17,9 +17,15 @@ const Specialist = () => {
   useEffect(() => {
     const fetchSpecialties = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/v1/specialties", {
-          next: { revalidate: 30 },
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/v1/specialties`,
+          {
+            next: { revalidate: 30 },
+
+            // const res = await fetch("http://localhost:5000/api/v1/specialties", {
+            //   next: { revalidate: 30 },
+          }
+        );
 
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
