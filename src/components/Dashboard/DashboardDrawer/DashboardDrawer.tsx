@@ -49,7 +49,7 @@ export default function DashboardDrawer({
 
   const { data, isLoading } = useGetSingleUserQuery({});
   const userId = data?.id ?? "";
-  console.log("user Id", data);
+  // console.log("user Id", data);
 
   return (
     <Box sx={{ display: "flex" }}>

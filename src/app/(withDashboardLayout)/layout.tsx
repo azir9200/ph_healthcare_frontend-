@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  if (!isLoggedIn()) {
-    return router.push("/login");
-  }
+  // if (!isLoggedIn()) {
+  //   return router.push("/login");
+  // }
 
   return <DashboardDrawer>{children} </DashboardDrawer>;
 };

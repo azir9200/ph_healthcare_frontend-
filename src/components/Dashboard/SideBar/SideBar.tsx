@@ -1,22 +1,11 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, List, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
 import { UserRole } from "@/types";
 import { useEffect, useState } from "react";
 import { drawerItems } from "@/utils/drawerItems";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import MailIcon from "@mui/icons-material/Mail";
 import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import SidebarItem from "./SidebarItem";
 import { getUserInfo } from "@/services/auth/auth.services";
 
@@ -60,18 +49,6 @@ const SideBar = () => {
         ))}
       </List>
       <Divider />
-      {/* <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
     </Box>
   );
 };
