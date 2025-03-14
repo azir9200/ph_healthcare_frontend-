@@ -7,6 +7,13 @@ import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import TryIcon from "@mui/icons-material/Try";
+import {
+  Home,
+  MenuOpen,
+  NotAccessible,
+  PeopleSharp,
+  PrecisionManufacturingOutlined,
+} from "@mui/icons-material";
 
 export const drawerItems = (role: UserRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = [];
@@ -65,6 +72,11 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
     case USER_ROLE.DOCTOR:
       roleMenus.push(
         {
+          title: "Home",
+          path: "/",
+          icon: Home,
+        },
+        {
           title: "Dashboard",
           path: `${role}`,
           icon: DashboardIcon,
@@ -77,17 +89,17 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
         {
           title: "Patients",
           path: `${role}/patients`,
-          icon: CalendarMonthIcon,
+          icon: PeopleSharp,
         },
         {
           title: "Profile",
           path: `${role}/profile`,
-          icon: CalendarMonthIcon,
+          icon: PrecisionManufacturingOutlined,
         },
         {
           title: "Appointments",
           path: `${role}/appointment`,
-          icon: CalendarMonthIcon,
+          icon: NotAccessible,
         }
       );
       break;

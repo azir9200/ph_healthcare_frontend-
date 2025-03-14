@@ -6,10 +6,8 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Container,
   Grid,
-  Grid2,
   Typography,
 } from "@mui/material";
 import Image from "next/image";
@@ -24,14 +22,13 @@ const TopRatedDoctors = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        
-        // const res = await fetch(
-        //   // "http://localhost:5000/api/v1/doctor?page=1&limit=3",
-        // );
-        
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/doctor?page=1&limit=3`
+          "http://localhost:5000/api/v1/doctor?page=1&limit=3"
         );
+
+        // const res = await fetch(
+        //   `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/v1/doctor?page=1&limit=3`
+        // );
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
@@ -81,7 +78,10 @@ const TopRatedDoctors = () => {
                 <Card>
                   <Box>
                     <Image
-                      src={doctor.profilePhoto || "/images/default-doctor.jpg"}
+                      src={
+                        doctor.profilePhoto ||
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoXDRQmSTSb8TYnDuEKV1Wdv7nzcSAdovGoA&s"
+                      }
                       alt="doctor"
                       width={500}
                       height={300}
