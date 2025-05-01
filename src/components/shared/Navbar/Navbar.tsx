@@ -10,11 +10,12 @@ import {
   IconButton,
   Drawer,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu"; // Import the Menu Icon
+import MenuIcon from "@mui/icons-material/Menu";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import TopNavbar from "./TopNavbar";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -34,106 +35,118 @@ const Navbar = () => {
     { ssr: false }
   );
 
-  const handleMenuToggle = () => {
-    setOpenMenu(!openMenu); // Toggle menu visibility
-  };
+  const navLinks = [
+    { name: "Consultation", path: "/consultation" },
+    { name: "Health Plans", path: "/healthPlans" },
+    { name: "Medicine", path: "/medicine" },
+    { name: "Diagnostics", path: "/diagnostics" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
-    <Container>
-      <Stack
-        py={2}
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        {/* Logo */}
-        <Typography
-          variant="h4"
-          fontWeight={600}
-          textAlign={{ xs: "center", sm: "left" }}
-        >
-          <Link href="/" className={isActive("/") ? "active-link" : ""}>
-            P
-            <Box component="span" color="primary.main">
-              H
-            </Box>{" "}
-            Health Care
-          </Link>
-        </Typography>
+    <Box
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1200,
+        backgroundColor: "white",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+      }}
+    >
+      {/* Top Strip */}
+      {/* <TopNavbar /> */}
 
-        {/* Mobile Hamburger Button */}
-        <Box sx={{ display: { xs: "block", sm: "none" } }}>
-          <IconButton onClick={handleMenuToggle} color="primary">
-            <MenuIcon />
-          </IconButton>
-        </Box>
-
-        {/* Navigation Links */}
+      {/* Main Navbar */}
+      <Container>
         <Stack
-          direction={{ xs: "column", sm: "row" }}
+          py={2}
+          direction="row"
           justifyContent="space-between"
-          gap={2}
-          sx={{
-            display: { xs: "none", sm: "flex" },
-            flexWrap: "wrap",
-          }}
+          alignItems="center"
         >
-          {[
-            { name: "Consultation", path: "/consultation" },
-            { name: "Health Plans", path: "/healthPlans" },
-            { name: "Medicine", path: "/medicine" },
-            { name: "Diagnostics", path: "/diagnostics" },
-            { name: "Contact", path: "/contact" },
-          ].map(({ name, path }) => (
-            <Link key={path} href={path}>
-              <Button
-                size="small"
-                variant={isActive(path) ? "contained" : "outlined"}
-                color="primary"
+          {/* Logo */}
+          <Typography variant="h5" fontWeight={600}>
+            <Link href="/" passHref>
+              <Box
+                component="span"
+                sx={{ textDecoration: "none", color: "black" }}
               >
-                {name}
-              </Button>
+                P
+                <Box component="span" color="primary.main">
+                  H
+                </Box>{" "}
+                Health Care
+              </Box>
             </Link>
-          ))}
+          </Typography>
+
+          {/* Mobile Menu Icon */}
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            <IconButton onClick={() => setOpenMenu(true)} color="primary">
+              <MenuIcon />
+            </IconButton>
+          </Box>
+
+          {/* Desktop Nav Links */}
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ display: { xs: "none", sm: "flex" } }}
+          >
+            {navLinks.map(({ name, path }) => (
+              <Link key={path} href={path} passHref>
+                <Button
+                  variant={isActive(path) ? "contained" : "outlined"}
+                  color="primary"
+                  size="small"
+                >
+                  {name}
+                </Button>
+              </Link>
+            ))}
+
+            {/* Auth button (Desktop) */}
+            {userInfo ? (
+              <Button color="error" onClick={handleLogOut}>
+                Logout
+              </Button>
+            ) : (
+              <AuthButton />
+            )}
+          </Stack>
         </Stack>
+      </Container>
 
-        {/* Authentication Button - For mobile or tablet */}
-        <Box sx={{ display: { xs: "block", sm: "none" } }}>
-          {/* <AuthButton /> */}
-        </Box>
-      </Stack>
-
-      {/* Drawer Menu for Mobile */}
+      {/* Mobile Drawer */}
       <Drawer
         anchor="right"
         open={openMenu}
-        onClose={handleMenuToggle}
+        onClose={() => setOpenMenu(false)}
         sx={{ display: { xs: "block", sm: "none" } }}
       >
         <Box sx={{ width: 250, p: 2 }}>
-          {[
-            { name: "Consultation", path: "/consultation" },
-            { name: "Health Plans", path: "/healthPlans" },
-            { name: "Medicine", path: "/medicine" },
-            { name: "Diagnostics", path: "/diagnostics" },
-            { name: "Contact", path: "/contact" },
-          ].map(({ name, path }) => (
-            <Link key={path} href={path}>
+          {navLinks.map(({ name, path }) => (
+            <Link key={path} href={path} passHref>
               <Button
                 fullWidth
-                variant={isActive(path) ? "contained" : "outlined"}
-                color="primary"
                 sx={{ mb: 1 }}
-                onClick={handleMenuToggle} // Close menu after selecting a link
+                variant={isActive(path) ? "contained" : "outlined"}
+                onClick={() => setOpenMenu(false)}
               >
                 {name}
               </Button>
             </Link>
           ))}
+          {userInfo ? (
+            <Button fullWidth color="error" onClick={handleLogOut}>
+              Logout
+            </Button>
+          ) : (
+            <AuthButton />
+          )}
         </Box>
       </Drawer>
-    </Container>
+    </Box>
   );
 };
 
