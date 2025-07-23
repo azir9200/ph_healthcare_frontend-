@@ -42,7 +42,7 @@ const HeroSection = () => {
           employees to work standing up, or bicycle chairs.
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Button>Make appointment</Button>
+          <Button   >Make appointment</Button>
           <Button variant="outlined">Contact us</Button>
         </Box>
       </Box>
